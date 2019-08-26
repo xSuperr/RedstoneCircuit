@@ -7,6 +7,8 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\block\Block;
 use pocketmine\block\BlockFactory;
 
+use pocketmine\entity\Entity;
+
 use pocketmine\item\Item;
 use pocketmine\item\ItemBlock;
 use pocketmine\item\ItemFactory;
@@ -68,6 +70,12 @@ use redstone\blocks\BlockWeightedPressurePlateLight;
 use redstone\blocks\BlockWeightedPressurePlateHeavy;
 use redstone\blocks\BlockWoodenDoor;
 
+use redstone\entities\EntityMinecart;
+
+use redstone\entities\utils\RidingManager;
+
+use redstone\items\ItemMinecart;
+
 use redstone\listeners\EventListener;
 use redstone\listeners\ScheduledBlockUpdateListener;
 
@@ -89,6 +97,8 @@ class Main extends PluginBase {
 
     private $palette;
 
+    private $riding;
+
     public function onEnable() {
         Main::$instance = $this;
 
@@ -98,10 +108,14 @@ class Main extends PluginBase {
 
         $this->palette = new GlobalBlockPalette();
 
+        $this->riding = new RidingManager();
+
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
 
         $this->initBlocks();
         $this->initBlockEntities();
+        $this->initEntities();
+        $this->initItems();
         $this->initCreativeItem();
     }
 
@@ -125,6 +139,10 @@ class Main extends PluginBase {
 
     public function getGlobalBlockPalette() : GlobalBlockPalette {
         return $this->palette;
+    }
+
+    public function getRiding() : RidingManager {
+        return $this->riding;
     }
 
     private function initBlocks() : void {
@@ -286,6 +304,14 @@ class Main extends PluginBase {
         if ($this->getCustomConfig()->isEnableRedstoneComparator()) {
             Tile::registerTile(BlockEntityRedstoneComparator::class, ["Comparator", "minecraft:comparator"]);
         }
+    }
+
+    private function initEntities() : void {
+        Entity::registerEntity(EntityMinecart::class, false, ["Minecart", "minecraft::minecart"]);
+    }
+
+    private function initItems() : void {
+        ItemFactory::registerItem(new ItemMinecart(), true);
     }
 
     private function initCreativeItem() : void {
