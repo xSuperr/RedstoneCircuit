@@ -164,7 +164,7 @@ class BlockEntityCommandBlock extends Spawnable implements InventoryHolder, Cont
 
         $args = [];
         preg_match_all('/"((?:\\\\.|[^\\\\"])*)"|(\S+)/u', $this->getCommand(), $matches);
-        foreach($matches[0] as $k => $_){
+        foreach(array_keys($matches[0]) as $k){
             for($i = 1; $i <= 2; ++$i){
                 if($matches[$i][$k] !== ""){
                     $args[$k] = stripslashes($matches[$i][$k]);
@@ -182,8 +182,7 @@ class BlockEntityCommandBlock extends Spawnable implements InventoryHolder, Cont
 
         $target->timings->startTiming();
 
-        for ($i = 0; $i < count($args); ++$i) {
-            $str = $args[$i];
+        foreach ($args as $key => $str) {
             if (strlen($str) == 0) {
                 continue;
             }
@@ -198,7 +197,7 @@ class BlockEntityCommandBlock extends Spawnable implements InventoryHolder, Cont
                 continue;
             }
 
-            $args[$i] = $entities;
+            $args[$key] = $entities;
         }
 
         $commands = $this->getSelectorCommand($sentCommandLabel, $args);
@@ -234,15 +233,14 @@ class BlockEntityCommandBlock extends Spawnable implements InventoryHolder, Cont
     private function getSelectorCommand(string $label, array $args) : array {
         $array = [];
         $check = false;
-        for ($i = 0; $i < count($args); ++$i) {
-            $arg = $args[$i];
+        foreach ($args as $key => as $arg) {
             if (is_string($arg)) {
                 continue;
             }
 
             foreach ($arg as $entity) {
                 $copy = $args;
-                $copy[$i] = $entity instanceof Player ? $entity->getName() : strval($entity->getId());
+                $copy[$key] = $entity instanceof Player ? $entity->getName() : strval($entity->getId());
                 $array = array_merge($array, $this->getSelectorCommand($label, $copy));
                 $check = true;
             }

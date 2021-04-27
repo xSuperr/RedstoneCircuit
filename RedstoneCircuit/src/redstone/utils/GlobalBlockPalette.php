@@ -15,7 +15,6 @@ class GlobalBlockPalette {
     public function __construct() {
         $legacyIdMap = json_decode(file_get_contents(RESOURCE_PATH . "vanilla/block_id_map.json"), true);
         foreach($legacyIdMap as $name => $id){
-            $id = $legacyIdMap[$name];
             $this->nameTable[$name] = $id;
             $this->idTable[$id] = $name;
         }

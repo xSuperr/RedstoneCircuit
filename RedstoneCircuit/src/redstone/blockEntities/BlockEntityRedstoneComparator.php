@@ -66,6 +66,9 @@ class BlockEntityRedstoneComparator extends Tile {
 
     protected function hasSideUtility() : bool {
         $block = $this->getBlock();
+        if (!$block instanceof BlockRedstoneDiode) {
+        	return false;
+        }
         $sideBlock = $block->getSide($block->getInputFace());
         $tile = $this->getLevel()->getTile($sideBlock);
         if ($tile instanceof Container) {
@@ -95,6 +98,9 @@ class BlockEntityRedstoneComparator extends Tile {
 
     public function recalculateOutputPower() : int {
         $block = $this->getBlock();
+        if (!$block instanceof BlockRedstoneDiode) {
+        	return 0;
+        }
         $power = $block->getRedstonePower($this->getSide($block->getInputFace()), $block->getInputFace());// HACK: Method 'getRedstonePower' not found in \pocketmine\block\Block
         $power = max($power, $this->recalculateSideUtilityPower());
 
@@ -127,6 +133,9 @@ class BlockEntityRedstoneComparator extends Tile {
 
     protected function recalculateSideUtilityPower() : int {
         $block = $this->getBlock();
+        if (!$block instanceof BlockRedstoneDiode) {
+        	return 0;
+        }
         $sideBlock = $block->getSide($block->getInputFace());
         $power = $this->recalculateUtilityPower($sideBlock);
         if ($power > 0) {
