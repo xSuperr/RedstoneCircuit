@@ -233,7 +233,7 @@ class BlockEntityCommandBlock extends Spawnable implements InventoryHolder, Cont
     private function getSelectorCommand(string $label, array $args) : array {
         $array = [];
         $check = false;
-        foreach ($args as $key => as $arg) {
+        foreach ($args as $key => $arg) {
             if (is_string($arg)) {
                 continue;
             }
