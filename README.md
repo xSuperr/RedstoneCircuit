@@ -1,10 +1,10 @@
-# RedstoneCircuit_PMMP-Plugin
-This plugin makes the redstone circuit will work.
+# RedstoneCircuit
+This is a fork from the original plugin: [RedstoneCircuit](https://github.com/tedo0627/RedstoneCircuit_PMMP-Plugin)
 
-This plugin used nukkit source.
+This is the most fixed version of the plugin
 
-## Download
-[ClickHere](https://github.com/tedo0627/RedstoneCircuit_PMMP-Plugin/releases/download/1.0.1/RedstoneCircuit_v1.0.1.phar)
+## Downloads
+[Click Here](https://github.com/tedo0627/RedstoneCircuit_PMMP-Plugin/releases)
 
 ## TODO
 ・Rails<br>
