@@ -20,6 +20,7 @@ use pocketmine\tile\Spawnable;
 use redstone\Main;
 
 use redstone\blocks\BlockMoving;
+use redstone\blocks\BlockPiston;
 use redstone\blocks\BlockPistonarmcollision;
 use redstone\blocks\IRedstone;
 
@@ -104,6 +105,10 @@ class BlockEntityPistonArm extends Spawnable {
         if ($this->extend) {
             if ($this->newState == 0) {
                 $piston = $this->getBlock();
+                if(!$piston instanceof BlockPiston){
+                    return false;
+                }
+
                 $side = $this->getSide($piston->getFace());
                 if ($this->getLevel()->getBlock($side)->getId() != 0) {
                     $blocks = $this->recalculatePushBlocks();
